@@ -3,24 +3,35 @@
 // Importación de modulos
 import modules, { mode, port, start } from "./src/modules.js";
 
-// Función main del servidor
-async function main() {
+// Conexión con DB
+import { DatabasePool } from "./src/database/config.pool.js";
+
+/**
+ * Función "Server" para inicializar los procesos del servidor
+ */
+async function Server() {
     try {
 
         if (!port || !mode) {
             throw new Error("No se ha obtenido el puerto o modo del servidor");
         }
 
-        modules.listen(port, () => {
-            console.log(start);
-        });
+        // Estableciendo la conexión con DB
+        await DatabasePool().sync();
+
+        // Iniciando el servidor
+        modules.listen(port);
+
+        // Confirmación del servidor
+        console.log(start);
 
     } catch (error) {
         console.error({
             msj: "No se ha iniciado el servidor",
             error: error.message,
+            details: error
         });
     }
 }
 
-main();
+Server();
