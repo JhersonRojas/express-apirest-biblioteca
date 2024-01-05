@@ -12,6 +12,7 @@ import morgan from "morgan";
 
 // Rutas del servidor
 import { global_routes } from "./routes/global.routes.js";
+import { usuarios_routes } from "./routes/usuarios.routes.js";
 
 /**
  * Función encargada de la configuración del servidor y sus dependencias
@@ -20,11 +21,11 @@ import { global_routes } from "./routes/global.routes.js";
 async function Server() {
     try {
 
-        // Instancia del servidor
-        const modules = express();
-
         // Configuraciones del servidor
-        await new Promise((resolve, reject) => {
+        return await new Promise((resolve, reject) => {
+
+            // Instancia del servidor
+            const modules = express();
 
             // Instancias de variables de entorno
             const PORT = process.env.SERVER_PORT;
@@ -50,11 +51,12 @@ async function Server() {
 
             // Adicionando rutas
             modules.use(global_routes);
+            modules.use(usuarios_routes);
 
             // Estableciendo el inicio del servidor
             modules.listen(PORT);
 
-            console.log(` { Server } - Servidor en marcha http://localhost:${PORT} \n `);
+            console.log(` { Server } - Servidor en marcha http://localhost:${PORT} \n`);
 
             return resolve("Servidor iniciado");
         });

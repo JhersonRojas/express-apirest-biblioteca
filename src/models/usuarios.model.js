@@ -4,13 +4,13 @@
 import { DataTypes } from "sequelize";
 
 // Configuración de DB 
-import { DatabasePool } from "../database/config.pool.js";
+import { SequelizePool } from "../database/config.pool.js";
 import Movimientos from "./movimientos.model.js";
 
 /**
  * Modelo para la estructura de usuarios de la DB
  */
-const Usuarios = DatabasePool.define(
+const Usuarios = SequelizePool.define(
     "Usuarios",
     {
         Identificacion: {

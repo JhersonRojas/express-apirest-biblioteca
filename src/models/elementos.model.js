@@ -4,13 +4,13 @@
 import { DataTypes } from "sequelize";
 
 // Configuración de DB
-import { DatabasePool } from "../database/config.pool.js";
+import { SequelizePool } from "../database/config.pool.js";
 import Movimientos from "./movimientos.model.js";
 
 /**
  * Modelo de la estructura de elementos para la DB
  */
-const Elementos = DatabasePool.define(
+const Elementos = SequelizePool.define(
     "Elementos",
     {
         Pk_Elemento: {

@@ -1,6 +1,6 @@
 {
   "name": "express-apirest-biblioteca",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Api rest con Express y Sequelize para un sistema de biblioteca",
   "type": "module",
   "main": "app.js",

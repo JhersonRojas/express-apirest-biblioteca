@@ -4,7 +4,7 @@
 import { Server } from "./src/modules.js";
 
 // Conexión con DB
-import { DatabasePool } from "./src/database/config.pool.js";
+import { Database } from "./src/database/config.pool.js";
 
 // Importación de modelos
 import "./src/models/categorias.model.js";
@@ -19,14 +19,14 @@ async function App() {
     try {
 
         // Estableciendo la conexión con DB
-        await DatabasePool.sync();
+        await Database();
 
         // Iniciando el servidor
         await Server();
 
     } catch (error) {
         console.error({
-            msj: "No se ha iniciado el servidor",
+            msj: "Error al iniciar algún servicin en la aplicación",
             error: error.message,
             details: error,
         });

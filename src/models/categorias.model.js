@@ -4,13 +4,13 @@
 import { DataTypes } from "sequelize";
 
 // Configuración de DB
-import { DatabasePool } from "../database/config.pool.js";
+import { SequelizePool } from "../database/config.pool.js";
 import Elementos from "./elementos.model.js";
 
 /**
  * Modelo para la estructura categorías para la DB
  */
-const Categorias = DatabasePool.define(
+const Categorias = SequelizePool.define(
     "Categorias",
     {
         Pk_Categoria: {
