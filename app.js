@@ -1,35 +1,28 @@
 // @ts-check
 
 // Importación de modulos
-import modules, { mode, port, start } from "./src/modules.js";
+import { Server } from "./src/modules.js";
 
 // Conexión con DB
 import { DatabasePool } from "./src/database/config.pool.js";
 
 // Importación de modelos
-import "./src/models/usuarios.model.js";
-import "./src/models/movimientos.model.js";
-import "./src/models/elementos.model.js";
 import "./src/models/categorias.model.js";
+import "./src/models/elementos.model.js";
+import "./src/models/movimientos.model.js";
+import "./src/models/usuarios.model.js";
 
 /**
  * Función "Server" para inicializar los procesos del servidor
  */
-async function Server() {
+async function App() {
     try {
-
-        if (!port || !mode) {
-            throw new Error("No se ha obtenido el puerto o modo del servidor");
-        }
 
         // Estableciendo la conexión con DB
         await DatabasePool.sync();
 
         // Iniciando el servidor
-        modules.listen(port);
-
-        // Confirmación del servidor
-        console.log(start);
+        await Server();
 
     } catch (error) {
         console.error({
@@ -40,4 +33,4 @@ async function Server() {
     }
 }
 
-Server();
+App();

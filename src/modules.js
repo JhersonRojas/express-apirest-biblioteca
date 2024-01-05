@@ -11,30 +11,57 @@ import express from "express";
 import morgan from "morgan";
 
 // Rutas del servidor
-import { global_routes } from './routes/global.routes.js'
+import { global_routes } from "./routes/global.routes.js";
 
-// Instancia del servidor
-const modules = express();
+/**
+ * Función encargada de la configuración del servidor y sus dependencias
+ *
+ */
+async function Server() {
+    try {
 
-const mode = process.env.SERVER_MODE;
-const port = process.env.SERVER_PORT;
-const start = `\n { Server } - Servidor en marcha http://localhost:${port} \n`
+        // Instancia del servidor
+        const modules = express();
 
-// Configuración del modulos
-modules.use(cors({ origin: true, credentials: true }));
-modules.use(body.json({ limit: "15mb" }));
-modules.use(body.urlencoded({ limit: "15mb", extended: true }));
+        // Configuraciones del servidor
+        await new Promise((resolve, reject) => {
 
-// Configuración del Logger sobre las peticiones
-if (mode === "development") {
-    modules.use(morgan("dev"));
-} else {
-    modules.use(morgan("common", { skip: (_req, res) => res.statusCode < 400 }));
+            // Instancias de variables de entorno
+            const PORT = process.env.SERVER_PORT;
+            const MODE = process.env.SERVER_MODE;
+
+            if (!MODE || !PORT) {
+                return reject("Error de credenciales en la configuración del servidor");
+            }
+
+            // Configuración del Logger sobre las peticiones
+            if (MODE === "development") {
+                modules.use(morgan("dev"));
+            }
+
+            if (MODE === "production") {
+                modules.use(morgan("common", { skip: (_req, res) => res.statusCode < 400 }));
+            }
+
+            // Configuración del modulos
+            modules.use(cors({ origin: true, credentials: true }));
+            modules.use(body.json({ limit: "15mb" }));
+            modules.use(body.urlencoded({ limit: "15mb", extended: true }));
+
+            // Adicionando rutas
+            modules.use(global_routes);
+
+            // Estableciendo el inicio del servidor
+            modules.listen(PORT);
+
+            console.log(` { Server } - Servidor en marcha http://localhost:${PORT} \n `);
+
+            return resolve("Servidor iniciado");
+        });
+
+    } catch (error) {
+        throw error;
+    }
 }
 
-// Adicionando rutas
-modules.use(global_routes);
-
-// Exportación de modulos
-export { port, start, mode };
-export default modules;
+export { Server };
