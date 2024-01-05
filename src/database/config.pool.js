@@ -1,5 +1,9 @@
 // @ts-check
 
+// Configuración de entorno
+import { config } from "dotenv";
+config({ path: "./src/envs/.env.example" });
+
 // Dependencias
 import { Sequelize } from "sequelize";
 

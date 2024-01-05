@@ -14,6 +14,9 @@ import morgan from "morgan";
 import { global_routes } from "./routes/global.routes.js";
 import { usuarios_routes } from "./routes/usuarios.routes.js";
 
+// Middlewares
+import { handleErrors } from "./middlewares/errors.middleware.js";
+
 /**
  * Función encargada de la configuración del servidor y sus dependencias
  *
@@ -52,6 +55,7 @@ async function Server() {
             // Adicionando rutas
             modules.use(global_routes);
             modules.use(usuarios_routes);
+            modules.use(handleErrors)
 
             // Estableciendo el inicio del servidor
             modules.listen(PORT);
