@@ -23,7 +23,7 @@ const Usuarios = SequelizePool.define(
         },
         Correo: {
             type: DataTypes.STRING(50),
-            allowNull: true,
+            allowNull: false,
             unique: true
         },
         Clave: {

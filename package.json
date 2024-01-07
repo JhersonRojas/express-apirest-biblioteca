@@ -1,6 +1,6 @@
 {
   "name": "express-apirest-biblioteca",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Api rest con Express y Sequelize para un sistema de biblioteca",
   "author": {
     "name": "Jherson A Rojas",

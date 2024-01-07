@@ -8,7 +8,7 @@
  * @param {import("express").Response} res - Objeto de respuesta de Express.
  * @param {import("express").NextFunction} _next - Función para invocar el siguiente middleware.
  *
- * @returns {void}
+ * @returns {import("express").Response}
  */
 export function handleErrors(error, req, res, _next) {
     console.log({
@@ -17,7 +17,7 @@ export function handleErrors(error, req, res, _next) {
         detalles: error,
     });
 
-    res.status(500).json({
+    return res.status(500).json({
         confirm: false,
         error: "An internal server error occurred",
     });
